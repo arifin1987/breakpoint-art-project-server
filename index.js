@@ -39,6 +39,26 @@ async function run() {
       const result = await recipeCollection.findOne(query);
       res.send(result);
     });
+
+    app.delete("/recipe/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await recipeCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    app.patch("/recipe/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updateRecipe = req.body;
+      const updateDoc = {
+        $set: {
+          status: updateRecipe.status,
+        },
+      };
+      const result = await recipeCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    });
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
