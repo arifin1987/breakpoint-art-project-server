@@ -5,13 +5,7 @@ const port = process.env.PORT || 5000;
 const app = express();
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: ["https://breakpoint-art-project.vercel.app/"],
-    methods: ["POST", "GET"],
-    credentials: true,
-  })
-);
+app.use(cors());
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.59h68ks.mongodb.net/?retryWrites=true&w=majority`;
@@ -28,7 +22,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    //await client.connect();
+    await client.connect();
     const recipeCollection = client.db("breakpointRecipe").collection("recipe");
     app.post("/recipe", async (req, res) => {
       const newRecipe = req.body;
