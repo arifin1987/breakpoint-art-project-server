@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://vercel.com/arifin1987/breakpoint-art-project"],
+    origin: ["https://breakpoint-art-project.vercel.app/"],
     methods: ["POST", "GET"],
     credentials: true,
   })
